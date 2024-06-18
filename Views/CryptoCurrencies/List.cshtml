@@ -1,0 +1,14 @@
+﻿﻿@model IEnumerable<CryptoTracker.Models.CryptocurrencyDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+@foreach (var crypto in Model)
+{
+    <h2><a href="/CryptoCurrencies/Details/@crypto.Crypto_id">@crypto.Crypto_id</a></h2>
+    <div>Name: @crypto.Crypto_name</div>
+    <div>Symbol: @crypto.Crypto_symbol</div>
+
+
+}

@@ -1,0 +1,167 @@
+﻿@model CryptoTracker.Models.CryptoDashboardViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .container h2, .container h3 {
+        color: #333;
+        font-family: Arial, sans-serif;
+    }
+
+    .table {
+        margin-top: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+        .table thead th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .table tbody td {
+            background-color: #f2f2f2;
+        }
+</style>
+
+<div class="container">
+    <h2>Crypto LeaderBoard</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Top by MarketCap</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int rank = 0;
+                        foreach (var item in Model.CryptosSortedByPrice)
+                        {
+                                        <tr>
+                                            <td>@(++rank)</td>
+                                            <td><a href="../Details/@item.Crypto_id">@item.Crypto_name</a></td>
+                                            <td>@item.LatestPrice.ToString("N0")</td>
+                                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h3>Top by Price</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>MarketCap</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        rank = 0;
+                        foreach (var item in Model.CryptosSortedByMarketCap)
+                        {
+                            <tr>
+                                <td>@(++rank)</td>
+                                <td><a href="../Details/@item.Crypto_id">@item.Crypto_name</a></td>
+                                <td>@item.Market_cap.ToString("N0")</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h3>Top by Price Change</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Price Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        rank = 0;
+                        foreach (var item in Model.CryptosSortedByPriceChange)
+                        {
+                            <tr>
+                                <td>@(++rank)</td>
+                                <td><a href="../Details/@item.Crypto_id">@item.Crypto_name</a></td>
+                                <td>@item.PriceChange.ToString("N2")%</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Top Cryptocurrencies</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Market Cap</th>
+                        <th>Circulating Supply</th>
+                        <th>Price</th>
+                        <th>Price Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        rank = 0;
+                        foreach (var item in Model.CryptosSortedByMarketCap.Take(10))
+                        {
+                                        <tr>
+                                            <td>@(++rank)</td>
+                                            <td>@item.Crypto_name</td>
+                                            <td>@item.Market_cap.ToString("N0")</td>
+                                            <td>@item.Circulating_supply.ToString("N0")</td>
+                                            <td>$@item.LatestPrice.ToString("N2")</td>
+                                            <td>@item.PriceChange.ToString("N2")%</td>
+                                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <h2>Crypto News</h2>
+    <form method="get" action="@Url.Action("Index")">
+        <label for="SearchCryptoId">Search Symbol:</label>
+        <input type="text" name="SearchCryptoSymbol" class="form-control" placeholder="Enter Crypto Symbol" value="" />
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+
+    <!-- Displaying the news -->
+    <div class="row mt-3">
+        @foreach (var news in Model.NewsList)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@news.Topic</h5>
+                        <p class="card-text">@news.Content</p>
+                       
+                        <p class="card-text"><small class="text-muted">@news.Created_at.ToString("g")</small></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

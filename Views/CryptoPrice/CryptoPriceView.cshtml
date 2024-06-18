@@ -1,0 +1,14 @@
+﻿@model CryptoTracker.Models.CryptoPriceViewModel
+
+@{
+    ViewBag.Title = "CryptoPriceView";
+}
+
+<h2>CryptoPriceView</h2>
+
+<h2>@Model.crypto.Crypto_name - Market Overview</h2>
+
+<div>
+    <h3>Price Information</h3>
+    <p>Current Price: @Model.price.Price</p>
+</div>

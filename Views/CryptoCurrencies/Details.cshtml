@@ -1,0 +1,68 @@
+﻿@model CryptoTracker.Models.PricesViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Cryptocurrency.Crypto_name Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.16.1/dist/date-fns.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@1.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <h2>@Model.Cryptocurrency.Crypto_name</h2>
+            <!-- Graph Column -->
+            <div class="col-md-6">
+                <canvas id="priceChart" style="height: 400px;"></canvas>
+            </div>
+            <!-- Details Column -->
+            <div class="col-md-6">
+                <p><strong>Name:</strong> @Model.Cryptocurrency.Crypto_name</p>
+                <p><strong>Symbol:</strong> @Model.Cryptocurrency.Crypto_symbol</p>
+                <p><strong>Price:</strong> @Model.LatestPrice</p>
+                <p><strong>Market Cap:</strong> @Model.Cryptocurrency.Market_cap</p>
+                <p><strong>Description:</strong> @Html.Raw(Model.Cryptocurrency.Description)</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var pricesData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Prices.Select(p => new { p.Timestamp, p.Price })));
+        pricesData.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
+
+        var priceChart = new Chart(document.getElementById('priceChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: pricesData.map(p => new Date(p.Timestamp).toISOString().slice(0, 10)),
+                datasets: [{
+                    label: 'Price over Time',
+                    data: pricesData.map(p => p.Price),
+                    borderColor: 'rgb(75, 192, 192)',
+                    fill: false,
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day'
+                        }
+                    },
+                    y: {
+                        beginAtZero: false
+                    }
+                },
+                responsive: true,
+                 maintainAspectRatio: true, // Set to true to maintain the aspect ratio
+            aspectRatio: 2 // Optional: Set a fixed aspect ratio
+            }
+        });
+    </script>
+</body>
+</html>

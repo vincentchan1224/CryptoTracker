@@ -1,0 +1,39 @@
+﻿﻿@model CryptoTracker.Models.CryptocurrencyDto
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit Crypto</h2>
+<form action="/CryptoCurrencies/Update/@Model.Crypto_id" method="POST">
+
+    <input type="text" style="display:none;" name="Crypto_id" value="@Model.Crypto_id" />
+    <div>
+        <label>Name:</label> <input type="text" name="Crypto_name" value="@Model.Crypto_name"/>
+    </div>
+    <div>
+        <label>Crypto_symbol:</label> <input type="text" name="Crypto_symbol" value="@Model.Crypto_symbol"/>
+    </div>
+    <div>
+        <label>Description:</label> <input type="text" name="Description" value="@Model.Description" />
+    </div>
+
+    <div>
+        <label>Market_cap:</label> <input type="number" name="Market_cap" value="@Model.Market_cap"/>
+    </div>
+    <div>
+        <label>Circulating_supply:</label> <input type="number" name="Circulating_supply"value="@Model.Circulating_supply" />
+    </div>
+    <div>
+        <label>Max_supply:</label> <input type="number" name="Max_supply" value="@Model.Max_supply"/>
+    </div>
+    <div>
+        <label>DateTime:</label> <input type="datetime" name="Created_at" value="@Model.Created_at"/>
+    </div>
+
+
+    <div>
+        <input type="submit" value="Update" />
+
+    </div>
+</form>

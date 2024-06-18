@@ -1,0 +1,16 @@
+﻿﻿@model CryptoTracker.Models.CryptocurrencyDto
+
+
+@{
+    ViewBag.Title = "View";
+}
+
+<a href="/CryptoCurrencies/List">Go back to list</a>
+<h2>@Model.Crypto_name</h2>
+<div>syboml: @Model.Crypto_symbol</div>
+<div>Description: @Model.Description</div>
+<div>@Model.Market_cap</div>
+<div>@Model.Circulating_supply</div>
+<div>@Model.Max_supply</div>
+<div>@Model.Created_at</div>
+

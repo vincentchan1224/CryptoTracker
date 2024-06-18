@@ -1,0 +1,37 @@
+﻿@model IEnumerable<CryptoTracker.Models.CryptocurrencyDto>
+  ﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Price</h2>
+<form action="/CryptoCurrencies/Create" method="POST">
+    <div>
+        <label>Name:</label> <input type="text" name="Crypto_name" />
+    </div>
+    <div>
+        <label>Crypto_symbol:</label> <input type="text" name="Crypto_symbol" />
+    </div>
+    <div>
+        <label>Description:</label> <input type="text" name="Description" />
+    </div>
+
+    <div>
+        <label>Market_cap:</label> <input type="number" name="Market_cap" />
+    </div>
+    <div>
+        <label>Circulating_supply:</label> <input type="number" name="Circulating_supply" />
+    </div>
+    <div>
+        <label>Max_supply:</label> <input type="number" name="Max_supply" />
+    </div>
+    <div>
+        <label>DateTime:</label> <input type="date" name="Created_at" />
+    </div>
+
+
+    <div>
+        <input type="submit" value="Add Crypto" />
+
+    </div>
+</form>
