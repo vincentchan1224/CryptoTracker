@@ -43,7 +43,6 @@ namespace CryptoTracker.Controllers
             }
             else
             {
-                // Handle the error or redirect, maybe to an error page or back with an error message
                 return RedirectToAction("Error");
             }
         }
@@ -51,7 +50,6 @@ namespace CryptoTracker.Controllers
         // GET: CryptoCurrencies/Details/{crypto_id}
         public async Task<ActionResult> Details(int id)
         {
-            // Fetch the cryptocurrency details from the findcrypto API
             string detailsUrl = "CryptoCurrenciesData/findcrypto/" + id;
             HttpResponseMessage detailsResponse = client.GetAsync(detailsUrl).Result;
 
@@ -63,7 +61,7 @@ namespace CryptoTracker.Controllers
             var selectedCrypto = detailsResponse.Content.ReadAsAsync<CryptocurrencyDto>().Result;
 
             // Fetch all prices for this cryptocurrency
-            string pricesUrl = "Prices/GetAllPrices/" + id; // Assumes this endpoint returns all prices
+            string pricesUrl = "Prices/GetAllPrices/" + id; 
             HttpResponseMessage pricesResponse = client.GetAsync(pricesUrl).Result;
 
             decimal LatestPrice = 0;
@@ -121,9 +119,8 @@ namespace CryptoTracker.Controllers
         public ActionResult Edit(int id)
         {
             //grab the CryptoCurrencies information
-
             //objective: communicate with our CryptoCurrencies data api to retrieve one CryptoCurrencies
-            //curl https://localhost:44324/api/CryptoCurrenciesdata/findCryptoCurrencies/{id}
+            //curl https://localhost:44351/api/CryptoCurrenciesdata/findCrypto/{id}
 
             string url = "CryptoCurrenciesData/findcrypto/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
@@ -195,9 +192,10 @@ namespace CryptoTracker.Controllers
 
             var cryptoData = await Task.WhenAll(cryptoDataTasks);
 
-            var sortedByPrice = cryptoData.OrderByDescending(c => c.LatestPrice).ToList();
-            var sortedByMarketCap = cryptoData.OrderByDescending(c => c.Market_cap).ToList();
-            var sortedByPriceChange = cryptoData.OrderByDescending(c => c.PriceChange).ToList();
+            var sortedByPrice = cryptoData.OrderByDescending(c => c.LatestPrice).Take(3).ToList();
+            var sortedByMarketCap = cryptoData.OrderByDescending(c => c.Market_cap).Take(3).ToList();
+            var sortedByPriceChange = cryptoData.OrderByDescending(c => c.PriceChange).Take(3).ToList();
+            var AllCryptoByMarketCap = cryptoData.OrderByDescending(c => c.Market_cap).ToList();
             var newsList = new List<NewsDto>();
 
             int? searchCryptoId = GetCryptoIdBySymbol(searchCryptoSymbol);
@@ -238,6 +236,7 @@ namespace CryptoTracker.Controllers
                 CryptosSortedByPrice = sortedByPrice,
                 CryptosSortedByMarketCap = sortedByMarketCap,
                 CryptosSortedByPriceChange = sortedByPriceChange,
+                AllCryptoByMarketCap = AllCryptoByMarketCap,
                 NewsList = newsList
             };
 

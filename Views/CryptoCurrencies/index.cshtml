@@ -44,7 +44,7 @@
                         {
                                         <tr>
                                             <td>@(++rank)</td>
-                                            <td><a href="../Details/@item.Crypto_id">@item.Crypto_name</a></td>
+                                            <td><a href="./Details/@item.Crypto_id">@item.Crypto_name</a></td>
                                             <td>@item.LatestPrice.ToString("N0")</td>
                                         </tr>
                         }
@@ -69,7 +69,7 @@
                         {
                             <tr>
                                 <td>@(++rank)</td>
-                                <td><a href="../Details/@item.Crypto_id">@item.Crypto_name</a></td>
+                                <td><a href="./Details/@item.Crypto_id">@item.Crypto_name</a></td>
                                 <td>@item.Market_cap.ToString("N0")</td>
                             </tr>
                         }
@@ -94,7 +94,7 @@
                         {
                             <tr>
                                 <td>@(++rank)</td>
-                                <td><a href="../Details/@item.Crypto_id">@item.Crypto_name</a></td>
+                                <td><a href="./Details/@item.Crypto_id">@item.Crypto_name</a></td>
                                 <td>@item.PriceChange.ToString("N2")%</td>
                             </tr>
                         }
@@ -120,11 +120,11 @@
                 <tbody>
                     @{
                         rank = 0;
-                        foreach (var item in Model.CryptosSortedByMarketCap.Take(10))
+                        foreach (var item in Model.AllCryptoByMarketCap.Take(10))
                         {
                                         <tr>
                                             <td>@(++rank)</td>
-                                            <td>@item.Crypto_name</td>
+                                            <td><a href="./Details/@item.Crypto_id">@item.Crypto_name</a></td>
                                             <td>@item.Market_cap.ToString("N0")</td>
                                             <td>@item.Circulating_supply.ToString("N0")</td>
                                             <td>$@item.LatestPrice.ToString("N2")</td>

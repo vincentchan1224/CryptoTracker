@@ -38,8 +38,7 @@ namespace CryptoTracker.Controllers
             return cryptocurrencyDtos;
         }
         
-        // GET: api/CryptocurrenciesData/FindCrypto/5
-        //[ResponseType(typeof(CryptoCurrencies))]
+        // GET: api/CryptocurrenciesData/FindCrypto/{id}
         [HttpGet]
         [Route("api/CryptoCurrenciesData/FindCrypto/{id}")]
         public IHttpActionResult FindCrypto(int id)
@@ -66,7 +65,7 @@ namespace CryptoTracker.Controllers
             return Ok(CryptocurrencyDto);
         }
 
-        // POST: api/AnimalData/AddAnimal
+        // POST: api/CryptoCurrenciesData/AddCrypto
         [ResponseType(typeof(CryptoCurrencies))]
         [HttpPost]
         public IHttpActionResult AddCrypto(CryptoCurrencies crypto)
@@ -83,7 +82,7 @@ namespace CryptoTracker.Controllers
         }
 
 
-        // POST: api/AnimalData/UpdateAnimal/5
+        // POST: api/CryptoCurrenciesData/UpdateCrypto/{id}
         [ResponseType(typeof(void))]
         [HttpPost]
         [Route("api/CryptoCurrenciesData/UpdateCrypto/{id}")]

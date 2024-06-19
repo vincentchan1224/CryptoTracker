@@ -11,6 +11,8 @@ namespace CryptoTracker.Models
         public List<CryptocurrencyDBDto> CryptosSortedByMarketCap { get; set; }
         public List<CryptocurrencyDBDto> CryptosSortedByPriceChange { get; set; }
 
+        public List<CryptocurrencyDBDto> AllCryptoByMarketCap { get; set; }
+
         public List<NewsDto> NewsList { get; set; }
 
         public int SearchCryptoId { get; set; }

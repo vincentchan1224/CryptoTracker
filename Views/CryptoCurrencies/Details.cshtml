@@ -15,11 +15,11 @@
     <div class="container mt-4">
         <div class="row">
             <h2>@Model.Cryptocurrency.Crypto_name</h2>
-            <!-- Graph Column -->
+            <!-- Graph -->
             <div class="col-md-6">
                 <canvas id="priceChart" style="height: 400px;"></canvas>
             </div>
-            <!-- Details Column -->
+            <!-- Details -->
             <div class="col-md-6">
                 <p><strong>Name:</strong> @Model.Cryptocurrency.Crypto_name</p>
                 <p><strong>Symbol:</strong> @Model.Cryptocurrency.Crypto_symbol</p>
@@ -59,8 +59,8 @@
                     }
                 },
                 responsive: true,
-                 maintainAspectRatio: true, // Set to true to maintain the aspect ratio
-            aspectRatio: 2 // Optional: Set a fixed aspect ratio
+                 maintainAspectRatio: true,
+            aspectRatio: 2 
             }
         });
     </script>

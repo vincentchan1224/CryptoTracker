@@ -26,10 +26,6 @@ namespace CryptoTracker.Controllers
 
         public ActionResult Create(Prices price)
         {
-
-            //Debug.WriteLine(animal.AnimalName);
-            //objective: add a new animal into our system using the API
-            //curl -H "Content-Type:application/json" -d @animal.json https://localhost:44351/api/PricesData/AddPrice
             string url = "https://localhost:44351/api/PricesData/AddPrice";
             string jsonpayload = jss.Serialize(price);
 

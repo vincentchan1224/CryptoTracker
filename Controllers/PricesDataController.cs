@@ -20,9 +20,9 @@ namespace CryptoTracker.Controllers
             decimal? price = GetLatestPriceByCryptoId(cryptoId);
             if (price == null)
             {
-                return NotFound(); // 404 if no price found
+                return NotFound(); 
             }
-            return Ok(price); // 200 with the price value
+            return Ok(price);
         }
 
         private decimal? GetLatestPriceByCryptoId(int cryptoId)
@@ -42,9 +42,9 @@ namespace CryptoTracker.Controllers
             decimal? change = GetChangeByCryptoId(cryptoId);
             if (change == null)
             {
-                return NotFound(); // 404 if no price found
+                return NotFound();
             }
-            return Ok(change); // 200 with the price value
+            return Ok(change);
         }
 
 
@@ -54,15 +54,20 @@ namespace CryptoTracker.Controllers
                 .Where(p => p.Crypto_id == cryptoId)
                 .OrderByDescending(p => p.Timestamp)
                 .FirstOrDefault();
-            decimal beforeLatestPrice = (decimal)33000.33;
 
-            var change = (latestPrice.Price - beforeLatestPrice) / beforeLatestPrice;
+            var beforeLatestPrice = db.Prices
+                .Where(p => p.Crypto_id == cryptoId)
+                .OrderByDescending(p => p.Timestamp)
+                .Skip(1) // Skip the first latest price
+                .FirstOrDefault();
+
+            var change = (latestPrice.Price - beforeLatestPrice.Price) / beforeLatestPrice.Price;
 
             return change;
         }
 
 
-        // POST: api/AnimalData/AddAnimal
+        // POST: api/PricesData/AddPrice
         [ResponseType(typeof(Prices))]
         [HttpPost]
         public IHttpActionResult AddPrice(Prices price)
@@ -78,8 +83,7 @@ namespace CryptoTracker.Controllers
             return Ok();
         }
 
-        // GET: api/CryptocurrenciesData/FindCrypto/5
-        //[ResponseType(typeof(CryptoCurrencies))]
+        // GET: api/PricesData/FindPrice/{id}
         [HttpGet]
         [Route("api/PricesData/FindPrice/{id}")]
         public IHttpActionResult FindPrice(int id)
@@ -109,9 +113,9 @@ namespace CryptoTracker.Controllers
             PricesDto priceDto = GetLatestPricesDtoByCryptoId(cryptoId);
             if (priceDto == null)
             {
-                return NotFound(); // 404 if no price found
+                return NotFound();
             }
-            return Ok(priceDto); // 200 with the price value
+            return Ok(priceDto);
         }
         private PricesDto GetLatestPricesDtoByCryptoId(int cryptoId)
         {
@@ -125,7 +129,6 @@ namespace CryptoTracker.Controllers
                     Price = p.Price,
                     Timestamp = p.Timestamp,
 
-                    // Map other properties if necessary
                 })
                 .FirstOrDefault();
 

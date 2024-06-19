@@ -10,7 +10,6 @@ namespace CryptoTracker.Models
 {
     public class CryptoCurrencies
     {
-        // The description of a Crypto currency item
         [Key]
         public int Crypto_id { get; set; }
 
